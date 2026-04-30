@@ -11,25 +11,26 @@ class $modify(MyEditorPauseLayer, EditorPauseLayer) {
         auto ui = editor->m_editorUI;
         auto objs = CCArray::create();
         for (auto obj : CCArrayExt<GameObject*>(editor->m_objects)) {
-            if (obj->m_isHighDetail) objs->addObject(obj);  // Changed here
+            if (obj->m_isHighDetail) objs->addObject(obj);
         }
         ui->deselectAll();
         ui->selectObjects(objs, true);
-        
-        // resume editor to show selection
-        this->onResume(nullptr);
     }
 
     bool init(LevelEditorLayer* l) {
         if (!EditorPauseLayer::init(l)) return false;
         
         if (auto m = this->getChildByID("small-actions-menu")) {
+            // Create button sprite
+            auto spr = ButtonSprite::create("Select All HDM", "bigFont.fnt", "GJ_button_01.png");
+            spr->setScale(0.65f);
+            
             auto b = CCMenuItemSpriteExtra::create(
-                CCSprite::createWithSpriteFrameName("cc_2x2_white_image"),
-                nullptr, this, menu_selector(MyEditorPauseLayer::onSelectHDM)
+                spr, nullptr, this, menu_selector(MyEditorPauseLayer::onSelectHDM)
             );
             b->setID("select-all-hdm-btn");
-            m->addChild(b);
+            
+            m->insertBefore(b, nullptr);
             m->updateLayout();
         }
         return true;
