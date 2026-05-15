@@ -1,3 +1,6 @@
+## v1.0.4
+- quick visual bugfix
+
 ## v1.0.3
 - Added preview image
 - Improved button design
